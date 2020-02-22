@@ -1,6 +1,7 @@
 ﻿using CookieBasedAuthentication.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace CookieBasedAuthentication
 {
@@ -18,14 +19,29 @@ namespace CookieBasedAuthentication
 
         }
 
-        public void OnPost(UserRegistrationModel model)
+        public async Task OnPost(UserRegistrationModel model)
         {
             if(ModelState.IsValid)
             {
-                ViewData["OnPostSuccess"] = "OnPostMethodSuccess";
-            }
+                var identityUser = new IdentityUser
+                {
+                    Email = model.Email,
+                    UserName = model.Login
+                };
 
-            ViewData["OnPostSuccess"] = "OnPostMethodValidationError";
+                var result = await _userManager.CreateAsync(identityUser, model.Password);
+
+                if(result.Succeeded)
+                {
+                    ViewData["OnPostSuccess"] = "OnPostMethodSuccess";
+                } else
+                {
+                    ViewData["OnPostSuccess"] = "OnPostMethodUserManagerError";
+                    return;
+                }     
+            }
+            
+            ViewData["OnPostSuccess"] = "OnPostMethodModelStateError";
         }
     }
 }

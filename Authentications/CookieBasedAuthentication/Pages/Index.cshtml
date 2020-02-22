@@ -4,5 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Cookie Based Authentication</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>Hello @User.Identity.Name</h2>
+} else
+{
+    <h2>You are not authenticated!</h2>
+}
+
 

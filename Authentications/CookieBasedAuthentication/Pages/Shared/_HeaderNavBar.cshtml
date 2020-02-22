@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<IdentityUser> SignInManager
+
+<nav id="mainNavBar">
+    <ul>
+        <li><a href="@Url.Page("ForAuthorizedElite")" title="ForAuthorizedElite">ForAuthorizedElite</a></li>
+        <li><a href="@Url.Page("Registration")" title="Registration">Registration</a></li>
+        <li><a href="@Url.Page("Login")" title="Login">Login</a></li>
+        <li>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-page="/Logout" method="post">
+                    <input type="submit" value="Logout" />
+                </form>
+            }
+        </li>
+    </ul>
+</nav>

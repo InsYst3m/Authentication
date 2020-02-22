@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CookieBasedAuthentication
 {
-    [Authorize]
+    [Authorize(Policy = "Elite")]
     public class ForAuthorizedEliteModel : PageModel
     {
         public void OnGet()

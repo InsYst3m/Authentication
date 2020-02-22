@@ -30,7 +30,16 @@ namespace CookieBasedAuthentication
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Login");
+            services.ConfigureApplicationCookie(options => 
+            {
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/AccessDenied";
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Elite", policy => policy.RequireRole("admin", "elite"));
+            });
 
             services.AddRazorPages();       
         }

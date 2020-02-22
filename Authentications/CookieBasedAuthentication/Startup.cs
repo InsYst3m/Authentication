@@ -30,6 +30,8 @@ namespace CookieBasedAuthentication
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Login");
+
             services.AddRazorPages();       
         }
 
